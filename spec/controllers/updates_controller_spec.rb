@@ -19,13 +19,6 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe UpdatesController do
-
-  # This should return the minimal set of attributes required to create a valid
-  # Update. As you add validations to Update, be sure to
-  # update the return value of this method accordingly.
-  def valid_attributes
-    { :brief_message => "really brief", :details => "not really detailed" }
-  end
   
   describe "GET public_index" do
     it "assigns all updates as @updates in descending order of creation" do
@@ -39,7 +32,7 @@ describe UpdatesController do
 
   describe "GET index" do
     it "assigns all updates as @updates" do
-      update = Update.create! valid_attributes
+      update = Factory.create(:update)
       get :index
       assigns(:updates).should eq([update])
     end
@@ -47,7 +40,7 @@ describe UpdatesController do
 
   describe "GET show" do
     it "assigns the requested update as @update" do
-      update = Update.create! valid_attributes
+      update = Factory.create(:update)
       get :show, :id => update.id
       assigns(:update).should eq(update)
     end
@@ -62,7 +55,7 @@ describe UpdatesController do
 
   describe "GET edit" do
     it "assigns the requested update as @update" do
-      update = Update.create! valid_attributes
+      update = Factory.create(:update)
       get :edit, :id => update.id
       assigns(:update).should eq(update)
     end
@@ -72,18 +65,18 @@ describe UpdatesController do
     describe "with valid params" do
       it "creates a new Update" do
         expect {
-          post :create, :update => valid_attributes
+          post :create, :update => Factory.build(:update).attributes
         }.to change(Update, :count).by(1)
       end
 
       it "assigns a newly created update as @update" do
-        post :create, :update => valid_attributes
+        post :create, :update => Factory.build(:update).attributes
         assigns(:update).should be_a(Update)
         assigns(:update).should be_persisted
       end
 
       it "redirects to the created update" do
-        post :create, :update => valid_attributes
+        post :create, :update => Factory.build(:update).attributes
         response.should redirect_to(Update.last)
       end
     end
@@ -108,7 +101,7 @@ describe UpdatesController do
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested update" do
-        update = Update.create! valid_attributes
+        update = Factory.create(:update)
         # Assuming there are no other updates in the database, this
         # specifies that the Update created on the previous line
         # receives the :update_attributes message with whatever params are
@@ -118,21 +111,21 @@ describe UpdatesController do
       end
 
       it "assigns the requested update as @update" do
-        update = Update.create! valid_attributes
-        put :update, :id => update.id, :update => valid_attributes
+        update = Factory.create(:update)
+        put :update, :id => update.id, :update => Factory.build(:update).attributes
         assigns(:update).should eq(update)
       end
 
       it "redirects to the update" do
-        update = Update.create! valid_attributes
-        put :update, :id => update.id, :update => valid_attributes
+        update = Factory.create(:update)
+        put :update, :id => update.id, :update => Factory.build(:update).attributes
         response.should redirect_to(update)
       end
     end
 
     describe "with invalid params" do
       it "assigns the update as @update" do
-        update = Update.create! valid_attributes
+        update = Factory.create(:update)
         # Trigger the behavior that occurs when invalid params are submitted
         Update.any_instance.stub(:save).and_return(false)
         put :update, :id => update.id, :update => {}
@@ -140,7 +133,7 @@ describe UpdatesController do
       end
 
       it "re-renders the 'edit' template" do
-        update = Update.create! valid_attributes
+        update = Factory.create(:update)
         # Trigger the behavior that occurs when invalid params are submitted
         Update.any_instance.stub(:save).and_return(false)
         put :update, :id => update.id, :update => {}
@@ -151,14 +144,14 @@ describe UpdatesController do
 
   describe "DELETE destroy" do
     it "destroys the requested update" do
-      update = Update.create! valid_attributes
+      update = Factory.create(:update)
       expect {
         delete :destroy, :id => update.id
       }.to change(Update, :count).by(-1)
     end
 
     it "redirects to the updates list" do
-      update = Update.create! valid_attributes
+      update = Factory.create(:update)
       delete :destroy, :id => update.id
       response.should redirect_to(updates_url)
     end
