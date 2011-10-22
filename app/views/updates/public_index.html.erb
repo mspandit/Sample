@@ -1,0 +1,7 @@
+<h1>Recent updates</h1>
+
+<% @updates.each do |update| %>
+<em>Posted at <em><%= update.created_at %></em></em>
+<h3><%= update.brief_message %></h3>
+<p><%= update.details %></p>
+<% end %>

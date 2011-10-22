@@ -5,9 +5,6 @@ gem 'rails', '3.1.0'
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
-
-
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -17,6 +14,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
+gem 'devise'
 
 # Use unicorn as the web server
 # gem 'unicorn'
@@ -35,4 +33,9 @@ group :test, :development do
   gem 'factory_girl_rails'
   gem 'guard-rails'
   gem 'simplecov'
+  gem 'sqlite3'
+end
+
+group :production do
+  gem 'pg'
 end

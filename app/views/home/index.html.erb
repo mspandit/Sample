@@ -1,0 +1,10 @@
+<% if @first_time %>
+	<div class="update">
+		<p>This is your first time logging in after a feature update: <%= Update.latest.brief_message %> </p>
+		<p>Click <%= link_to "here", updates_public_index_url %> for details</p>
+	</div>
+<% else %>
+	<div class="update">
+		This is not your first time logging in after a feature update.
+	</div>
+<% end %>
