@@ -1,4 +1,6 @@
 class UpdatesController < ApplicationController
+  http_basic_authenticate_with :name => "admin", :password => "admin", :except => [:public_index]
+  
   # GET /updates/public_index
   def public_index
     @updates = Update.order("updated_at DESC")

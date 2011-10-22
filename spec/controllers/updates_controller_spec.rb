@@ -33,6 +33,7 @@ describe UpdatesController do
   describe "GET index" do
     it "assigns all updates as @updates" do
       update = Factory.create(:update)
+      @request.env["HTTP_AUTHORIZATION"] = "Basic " + Base64::encode64("admin:admin")
       get :index
       assigns(:updates).should eq([update])
     end
@@ -41,6 +42,7 @@ describe UpdatesController do
   describe "GET show" do
     it "assigns the requested update as @update" do
       update = Factory.create(:update)
+      @request.env["HTTP_AUTHORIZATION"] = "Basic " + Base64::encode64("admin:admin")
       get :show, :id => update.id
       assigns(:update).should eq(update)
     end
@@ -48,6 +50,7 @@ describe UpdatesController do
 
   describe "GET new" do
     it "assigns a new update as @update" do
+      @request.env["HTTP_AUTHORIZATION"] = "Basic " + Base64::encode64("admin:admin")
       get :new
       assigns(:update).should be_a_new(Update)
     end
@@ -56,6 +59,7 @@ describe UpdatesController do
   describe "GET edit" do
     it "assigns the requested update as @update" do
       update = Factory.create(:update)
+      @request.env["HTTP_AUTHORIZATION"] = "Basic " + Base64::encode64("admin:admin")
       get :edit, :id => update.id
       assigns(:update).should eq(update)
     end
@@ -65,17 +69,20 @@ describe UpdatesController do
     describe "with valid params" do
       it "creates a new Update" do
         expect {
+          @request.env["HTTP_AUTHORIZATION"] = "Basic " + Base64::encode64("admin:admin")
           post :create, :update => Factory.build(:update).attributes
         }.to change(Update, :count).by(1)
       end
 
       it "assigns a newly created update as @update" do
+        @request.env["HTTP_AUTHORIZATION"] = "Basic " + Base64::encode64("admin:admin")
         post :create, :update => Factory.build(:update).attributes
         assigns(:update).should be_a(Update)
         assigns(:update).should be_persisted
       end
 
       it "redirects to the created update" do
+        @request.env["HTTP_AUTHORIZATION"] = "Basic " + Base64::encode64("admin:admin")
         post :create, :update => Factory.build(:update).attributes
         response.should redirect_to(Update.last)
       end
@@ -85,6 +92,7 @@ describe UpdatesController do
       it "assigns a newly created but unsaved update as @update" do
         # Trigger the behavior that occurs when invalid params are submitted
         Update.any_instance.stub(:save).and_return(false)
+        @request.env["HTTP_AUTHORIZATION"] = "Basic " + Base64::encode64("admin:admin")
         post :create, :update => {}
         assigns(:update).should be_a_new(Update)
       end
@@ -92,6 +100,7 @@ describe UpdatesController do
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         Update.any_instance.stub(:save).and_return(false)
+        @request.env["HTTP_AUTHORIZATION"] = "Basic " + Base64::encode64("admin:admin")
         post :create, :update => {}
         response.should render_template("new")
       end
@@ -107,17 +116,20 @@ describe UpdatesController do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         Update.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
+        @request.env["HTTP_AUTHORIZATION"] = "Basic " + Base64::encode64("admin:admin")
         put :update, :id => update.id, :update => {'these' => 'params'}
       end
 
       it "assigns the requested update as @update" do
         update = Factory.create(:update)
+        @request.env["HTTP_AUTHORIZATION"] = "Basic " + Base64::encode64("admin:admin")
         put :update, :id => update.id, :update => Factory.build(:update).attributes
         assigns(:update).should eq(update)
       end
 
       it "redirects to the update" do
         update = Factory.create(:update)
+        @request.env["HTTP_AUTHORIZATION"] = "Basic " + Base64::encode64("admin:admin")
         put :update, :id => update.id, :update => Factory.build(:update).attributes
         response.should redirect_to(update)
       end
@@ -128,6 +140,7 @@ describe UpdatesController do
         update = Factory.create(:update)
         # Trigger the behavior that occurs when invalid params are submitted
         Update.any_instance.stub(:save).and_return(false)
+        @request.env["HTTP_AUTHORIZATION"] = "Basic " + Base64::encode64("admin:admin")
         put :update, :id => update.id, :update => {}
         assigns(:update).should eq(update)
       end
@@ -136,6 +149,7 @@ describe UpdatesController do
         update = Factory.create(:update)
         # Trigger the behavior that occurs when invalid params are submitted
         Update.any_instance.stub(:save).and_return(false)
+        @request.env["HTTP_AUTHORIZATION"] = "Basic " + Base64::encode64("admin:admin")
         put :update, :id => update.id, :update => {}
         response.should render_template("edit")
       end
@@ -146,12 +160,14 @@ describe UpdatesController do
     it "destroys the requested update" do
       update = Factory.create(:update)
       expect {
+        @request.env["HTTP_AUTHORIZATION"] = "Basic " + Base64::encode64("admin:admin")
         delete :destroy, :id => update.id
       }.to change(Update, :count).by(-1)
     end
 
     it "redirects to the updates list" do
       update = Factory.create(:update)
+      @request.env["HTTP_AUTHORIZATION"] = "Basic " + Base64::encode64("admin:admin")
       delete :destroy, :id => update.id
       response.should redirect_to(updates_url)
     end
